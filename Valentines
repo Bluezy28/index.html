@@ -282,7 +282,7 @@
     <div id="section1" class="section">
       <h2>For My Favorite Person 💌</h2>
       <img
-        src="https://drive.google.com/uc?export=view&id=1VFnv6uSW32NPzTSy5fGLQkWcGGze18ps"
+        src="https://github.com/Bluezy28/index.html/blob/main/rose.jpg?raw=true"
         alt="Bouquet of flowers"
         class="bouquet-img"
       />
@@ -312,11 +312,11 @@ Every moment with you feels just right
         <div class="balloon" data-id="4"></div>
       </div>
       <div class="reveal-image-wrapper">
-        <img id="img0" class="reveal-image" src="https://drive.google.com/uc?export=view&id=1hs6K6ZoBU1Cfrxo0L-pj6Y4HW5CZBN6n" alt="Memory 1" />
-        <img id="img1" class="reveal-image" src="https://drive.google.com/uc?export=view&id=1HY8XxJ2CtGMpPJCDYjffPDRG2puWQpSY" alt="Memory 2" />
-        <img id="img2" class="reveal-image" src="https://drive.google.com/uc?export=view&id=1cX-RjRxIEB77LjehQxVFgbZvRjZgqGg_" alt="Memory 3" />
-        <img id="img3" class="reveal-image" src="https://drive.google.com/uc?export=view&id=1ADUr-7U9FpBgYSZyB3B_zT_nH12_c1m8" alt="Memory 4" />
-        <img id="img4" class="reveal-image" src="https://drive.google.com/uc?export=view&id=1G1achLL56m9bF3KJQr5e0IZbhJ5iPQ5J" alt="Memory 5" />
+        <img id="img0" class="reveal-image" src="https://github.com/Bluezy28/index.html/blob/main/photo1.jpg?raw=true" alt="Memory 1" />
+        <img id="img1" class="reveal-image" src="https://github.com/Bluezy28/index.html/blob/main/photo2.jpg?raw=true" alt="Memory 2" />
+        <img id="img2" class="reveal-image" src="https://github.com/Bluezy28/index.html/blob/main/photo3.jpg?raw=true" alt="Memory 3" />
+        <img id="img3" class="reveal-image" src="https://github.com/Bluezy28/index.html/blob/main/photo4.jpg?raw=true" alt="Memory 4" />
+        <img id="img4" class="reveal-image" src="https://github.com/Bluezy28/index.html/blob/main/photo5.jpg?raw=true" alt="Memory 5" />
       </div>
       <div class="center">
         <button id="continueFromBalloons" class="continue-btn hidden">Continue ➜</button>
@@ -398,45 +398,4 @@ I realized that even though there are so many miles between us, I’ve never fel
       document.getElementById("img3"),
       document.getElementById("img4")
     ];
-    const continueFromBalloons = document.getElementById("continueFromBalloons");
-    let poppedCount = 0;
-
-    balloons.forEach(balloon => {
-      balloon.addEventListener("click", () => {
-        if (balloon.classList.contains("popped")) return;
-        const index = parseInt(balloon.getAttribute("data-id"), 10);
-        balloon.classList.add("popped");
-        poppedCount++;
-
-        if (revealImages[index]) {
-          revealImages[index].classList.add("visible");
-        }
-
-        if (poppedCount === balloons.length) {
-          continueFromBalloons.classList.remove("hidden");
-        }
-      });
-    });
-
-    continueFromBalloons.addEventListener("click", () => {
-      showSection("section3");
-    });
-
-    // Section 3: First question
-    const section3 = document.getElementById("section3");
-    section3.addEventListener("click", (e) => {
-      const btn = e.target.closest("button");
-      if (!btn) return;
-      const answer = btn.getAttribute("data-answer");
-      if (answer === "yes" || answer === "no") {
-        showSection("section4");
-      }
-    });
-
-    // Section 4: Error
-    const errorBox = document.getElementById("errorBox");
-    errorBox.addEventListener("click", () => {
-      showSection("section5");
-    });
-
-    // Section 5:
+    const continueFromBalloons = document
