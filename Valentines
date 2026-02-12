@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>For My Valentine</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #ffe6f0, #fff5ff);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #4a2b3b;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 480px;
+      background: #ffffffcc;
+      border-radius: 24px;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+      padding: 24px 20px 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    h1, h2, h3 {
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    p {
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 10px 20px;
+      background: #ff7aa2;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 6px 14px rgba(255, 122, 162, 0.4);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 20px rgba(255, 122, 162, 0.5);
+      background: #ff6795;
+    }
+
+    button:active {
+      transform: translateY(1px);
+      box-shadow: 0 4px 10px rgba(255, 122, 162, 0.35);
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .section {
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Section 1: Bouquet + note */
+    .bouquet-img {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      margin: 0 auto 16px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+      border: 4px solid #ffe0ec;
+    }
+
+    .note-card {
+      background: #fff9fd;
+      border-radius: 16px;
+      padding: 14px 16px;
+      border: 1px dashed #ffb6d4;
+      cursor: pointer;
+      position: relative;
+      margin: 0 auto;
+      max-width: 320px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .note-card:hover {
+      transform: translateY(-2px) rotate(-1deg);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+    }
+
+    .note-label {
+      font-size: 14px;
+      text-align: center;
+      color: #b35b7a;
+    }
+
+    .poem-text {
+      margin-top: 10px;
+      font-size: 14px;
+      white-space: pre-line;
+    }
+
+    .continue-btn {
+      margin-top: 16px;
+    }
+
+    /* Section 2: Balloons */
+    .balloon-area {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 10px;
+      margin-bottom: 12px;
+    }
+
+    .balloon {
+      width: 70px;
+      height: 90px;
+      border-radius: 50% 50% 45% 45%;
+      background: #ff9fbf;
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+      transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .balloon::after {
+      content: "";
+      position: absolute;
+      bottom: -18px;
+      left: 50%;
+      width: 2px;
+      height: 22px;
+      background: #d48aa5;
+      transform: translateX(-50%);
+    }
+
+    .balloon:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.16);
+    }
+
+    .balloon.popped {
+      opacity: 0;
+      transform: scale(0.4) translateY(10px);
+      box-shadow: none;
+      pointer-events: none;
+    }
+
+    .reveal-image-wrapper {
+      margin-top: 10px;
+      text-align: center;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      justify-items: center;
+    }
+
+    .reveal-image {
+      width: 100%;
+      max-width: 200px;
+      border-radius: 16px;
+      object-fit: cover;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+      border: 3px solid #ffd1e4;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .reveal-image.visible {
+      opacity: 1;
+    }
+
+    /* Section 3 & 5: Question */
+    .question-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .secondary-btn {
+      background: #ffffff;
+      color: #ff7aa2;
+      border: 1px solid #ffb6d4;
+      box-shadow: none;
+    }
+
+    .secondary-btn:hover {
+      background: #ffe6f2;
+      box-shadow: 0 6px 14px rgba(255, 182, 212, 0.4);
+    }
+
+    /* Section 4: Error */
+    .error-box {
+      background: #fff;
+      border-radius: 16px;
+      border: 1px solid #ffd1e4;
+      padding: 16px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+      text-align: left;
+      font-family: "Consolas", "Courier New", monospace;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .error-title {
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #c0395e;
+    }
+
+    .error-line {
+      margin-bottom: 4px;
+    }
+
+    /* Section 6: Notepad */
+    .notepad {
+      background: #fffdf7;
+      border-radius: 16px;
+      border: 1px solid #f3d6a4;
+      padding: 16px 18px;
+      box-shadow: inset 0 0 0 1px #f9e4c3;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .notepad::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 52px;
+      width: 1px;
+      height: 100%;
+      background: #f2c6c6;
+      opacity: 0.7;
+    }
+
+    .notepad-text {
+      font-size: 14px;
+      line-height: 1.7;
+      white-space: pre-line;
+    }
+
+    .small-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #b58a9a;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Section 1: Bouquet + Note -->
+    <div id="section1" class="section">
+      <h2>For My Favorite Person 💌</h2>
+      <img
+        src="https://drive.google.com/uc?export=view&id=1VFnv6uSW32NPzTSy5fGLQkWcGGze18ps"
+        alt="Bouquet of flowers"
+        class="bouquet-img"
+      />
+      <div id="noteCard" class="note-card">
+        <div class="note-label"><strong>Tap the note to open it ✨</strong></div>
+        <div id="poemContainer" class="poem-text hidden">
+I love your laugh, your voice, your smile,
+Every little thing you do makes life worthwhile
+Your snores, your jokes, our games at night
+Every moment with you feels just right
+        </div>
+      </div>
+      <div class="center">
+        <button id="continueFromPoem" class="continue-btn hidden">Continue ➜</button>
+      </div>
+    </div>
+
+    <!-- Section 2: Balloon Game -->
+    <div id="section2" class="section hidden">
+      <h2>Pop the Balloons 🎈</h2>
+      <p class="center">Pop all 5 balloons to reveal some of our memories.</p>
+      <div class="balloon-area">
+        <div class="balloon" data-id="0"></div>
+        <div class="balloon" data-id="1"></div>
+        <div class="balloon" data-id="2"></div>
+        <div class="balloon" data-id="3"></div>
+        <div class="balloon" data-id="4"></div>
+      </div>
+      <div class="reveal-image-wrapper">
+        <img id="img0" class="reveal-image" src="https://drive.google.com/uc?export=view&id=1hs6K6ZoBU1Cfrxo0L-pj6Y4HW5CZBN6n" alt="Memory 1" />
+        <img id="img1" class="reveal-image" src="https://drive.google.com/uc?export=view&id=1HY8XxJ2CtGMpPJCDYjffPDRG2puWQpSY" alt="Memory 2" />
+        <img id="img2" class="reveal-image" src="https://drive.google.com/uc?export=view&id=1cX-RjRxIEB77LjehQxVFgbZvRjZgqGg_" alt="Memory 3" />
+        <img id="img3" class="reveal-image" src="https://drive.google.com/uc?export=view&id=1ADUr-7U9FpBgYSZyB3B_zT_nH12_c1m8" alt="Memory 4" />
+        <img id="img4" class="reveal-image" src="https://drive.google.com/uc?export=view&id=1G1achLL56m9bF3KJQr5e0IZbhJ5iPQ5J" alt="Memory 5" />
+      </div>
+      <div class="center">
+        <button id="continueFromBalloons" class="continue-btn hidden">Continue ➜</button>
+      </div>
+    </div>
+
+    <!-- Section 3: First Question -->
+    <div id="section3" class="section hidden">
+      <h2>Will you be my Valentine? 💖</h2>
+      <div class="question-buttons">
+        <button class="primary-btn" data-answer="yes">Yes</button>
+        <button class="secondary-btn" data-answer="no">No</button>
+      </div>
+    </div>
+
+    <!-- Section 4: Error -->
+    <div id="section4" class="section hidden">
+      <h2 class="center">Oops…</h2>
+      <div id="errorBox" class="error-box">
+        <div class="error-title">LoveOverflowException</div>
+        <div class="error-line">System.Message: Love level exceeded safe capacity.</div>
+        <div class="error-line">at Heart.Core.ProcessFeelings()</div>
+        <div class="error-line">at Brain.TryToActNormal()</div>
+        <div class="error-line">Status: 💗 Overload detected.</div>
+        <br />
+        <div class="error-line">Click anywhere to try again…</div>
+      </div>
+    </div>
+
+    <!-- Section 5: Second Question -->
+    <div id="section5" class="section hidden">
+      <h2>So… will you be my Valentine? 🌸</h2>
+      <div class="question-buttons">
+        <button class="primary-btn" data-answer="yes2">Yes</button>
+        <button class="secondary-btn" data-answer="no2">No</button>
+      </div>
+    </div>
+
+    <!-- Section 6: Notepad -->
+    <div id="section6" class="section hidden">
+      <h2 class="center">A little note for you 📝</h2>
+      <p class="small-label">From me, to you</p>
+      <div class="notepad">
+        <div class="notepad-text">
+BABYYYY, 
+I realized that even though there are so many miles between us, I’ve never felt more connected to another soul, hence my forever soulmate. It isn't always easy being this far apart, but loving you makes every single second of the distance worth it. You’ve become my person—the one I want to run to with good news and the only one I want to talk to at the end of a long day. Every moment with you feels right and brings peace into my life, I feel like I can be myself with you. I’m so grateful for the way you’ve been there for me. You’ve picked me up when I was down and comforted me through every moment I wasn't at my best. You have this incredible way of knowing exactly what to do and what I need to hear to feel better. What touches me most is your heart. You’ll spend hours waiting just to spend a few moments with me. You are so patient, so gentle, and so consistently loving. You’ve truly shown me the real meaning of love, and I feel like the luckiest girl alive knowing I get to spend my life with you. Thank you for everything you’ve done and everything I know you’ll continue to do. I can’t wait until 'goodnight' is no longer over the phone or through text, but something you say while I’m wrapped into your arms. I can’t wait for forever cuddles and waking up right next to you. I promise to love you endlessly, my big strong knight. You are my whole world. I love you so much!
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showSection(id) {
+      const sections = document.querySelectorAll(".section");
+      sections.forEach(sec => sec.classList.add("hidden"));
+      document.getElementById(id).classList.remove("hidden");
+    }
+
+    // Section 1: Note + poem
+    const noteCard = document.getElementById("noteCard");
+    const poemContainer = document.getElementById("poemContainer");
+    const continueFromPoem = document.getElementById("continueFromPoem");
+
+    noteCard.addEventListener("click", () => {
+      poemContainer.classList.remove("hidden");
+      continueFromPoem.classList.remove("hidden");
+    });
+
+    continueFromPoem.addEventListener("click", () => {
+      showSection("section2");
+    });
+
+    // Section 2: Balloons
+    const balloons = document.querySelectorAll(".balloon");
+    const revealImages = [
+      document.getElementById("img0"),
+      document.getElementById("img1"),
+      document.getElementById("img2"),
+      document.getElementById("img3"),
+      document.getElementById("img4")
+    ];
+    const continueFromBalloons = document.getElementById("continueFromBalloons");
+    let poppedCount = 0;
+
+    balloons.forEach(balloon => {
+      balloon.addEventListener("click", () => {
+        if (balloon.classList.contains("popped")) return;
+        const index = parseInt(balloon.getAttribute("data-id"), 10);
+        balloon.classList.add("popped");
+        poppedCount++;
+
+        if (revealImages[index]) {
+          revealImages[index].classList.add("visible");
+        }
+
+        if (poppedCount === balloons.length) {
+          continueFromBalloons.classList.remove("hidden");
+        }
+      });
+    });
+
+    continueFromBalloons.addEventListener("click", () => {
+      showSection("section3");
+    });
+
+    // Section 3: First question
+    const section3 = document.getElementById("section3");
+    section3.addEventListener("click", (e) => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      const answer = btn.getAttribute("data-answer");
+      if (answer === "yes" || answer === "no") {
+        showSection("section4");
+      }
+    });
+
+    // Section 4: Error
+    const errorBox = document.getElementById("errorBox");
+    errorBox.addEventListener("click", () => {
+      showSection("section5");
+    });
+
+    // Section 5:
