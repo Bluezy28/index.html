@@ -276,18 +276,20 @@
     }
   </style>
 </head>
+
 <body>
   <div class="app">
-    <!-- Section 1: Bouquet + Note -->
+
+    <!-- SECTION 1 -->
     <div id="section1" class="section">
       <h2>For My Favorite Person 💌</h2>
-      <img
-        src="https://github.com/Bluezy28/index.html/blob/main/rose.jpg?raw=true"
-        alt="Bouquet of flowers"
-        class="bouquet-img"
-      />
+
+      <img src="https://github.com/Bluezy28/index.html/blob/main/rose.jpg?raw=true"
+           class="bouquet-img" alt="Bouquet" />
+
       <div id="noteCard" class="note-card">
         <div class="note-label"><strong>Tap the note to open it ✨</strong></div>
+
         <div id="poemContainer" class="poem-text hidden">
 I love your laugh, your voice, your smile,
 Every little thing you do makes life worthwhile
@@ -295,15 +297,17 @@ Your snores, your jokes, our games at night
 Every moment with you feels just right
         </div>
       </div>
+
       <div class="center">
         <button id="continueFromPoem" class="continue-btn hidden">Continue ➜</button>
       </div>
     </div>
 
-    <!-- Section 2: Balloon Game -->
+    <!-- SECTION 2 -->
     <div id="section2" class="section hidden">
       <h2>Pop the Balloons 🎈</h2>
       <p class="center">Pop all 5 balloons to reveal some of our memories.</p>
+
       <div class="balloon-area">
         <div class="balloon" data-id="0"></div>
         <div class="balloon" data-id="1"></div>
@@ -311,19 +315,21 @@ Every moment with you feels just right
         <div class="balloon" data-id="3"></div>
         <div class="balloon" data-id="4"></div>
       </div>
+
       <div class="reveal-image-wrapper">
-        <img id="img0" class="reveal-image" src="https://github.com/Bluezy28/index.html/blob/main/photo1.jpg?raw=true" alt="Memory 1" />
-        <img id="img1" class="reveal-image" src="https://github.com/Bluezy28/index.html/blob/main/photo2.jpg?raw=true" alt="Memory 2" />
-        <img id="img2" class="reveal-image" src="https://github.com/Bluezy28/index.html/blob/main/photo3.jpg?raw=true" alt="Memory 3" />
-        <img id="img3" class="reveal-image" src="https://github.com/Bluezy28/index.html/blob/main/photo4.jpg?raw=true" alt="Memory 4" />
-        <img id="img4" class="reveal-image" src="https://github.com/Bluezy28/index.html/blob/main/photo5.jpg?raw=true" alt="Memory 5" />
+        <img id="img0" class="reveal-image" src="https://github.com/Bluezy28/index.html/blob/main/photo1.jpg?raw=true" />
+        <img id="img1" class="reveal-image" src="https://github.com/Bluezy28/index.html/blob/main/photo2.jpg?raw=true" />
+        <img id="img2" class="reveal-image" src="https://github.com/Bluezy28/index.html/blob/main/photo3.jpg?raw=true" />
+        <img id="img3" class="reveal-image" src="https://github.com/Bluezy28/index.html/blob/main/photo4.jpg?raw=true" />
+        <img id="img4" class="reveal-image" src="https://github.com/Bluezy28/index.html/blob/main/photo5.jpg?raw=true" />
       </div>
+
       <div class="center">
         <button id="continueFromBalloons" class="continue-btn hidden">Continue ➜</button>
       </div>
     </div>
 
-    <!-- Section 3: First Question -->
+    <!-- SECTION 3 -->
     <div id="section3" class="section hidden">
       <h2>Will you be my Valentine? 💖</h2>
       <div class="question-buttons">
@@ -332,7 +338,7 @@ Every moment with you feels just right
       </div>
     </div>
 
-    <!-- Section 4: Error -->
+    <!-- SECTION 4 -->
     <div id="section4" class="section hidden">
       <h2 class="center">Oops…</h2>
       <div id="errorBox" class="error-box">
@@ -346,7 +352,7 @@ Every moment with you feels just right
       </div>
     </div>
 
-    <!-- Section 5: Second Question -->
+    <!-- SECTION 5 -->
     <div id="section5" class="section hidden">
       <h2>So… will you be my Valentine? 🌸</h2>
       <div class="question-buttons">
@@ -355,10 +361,11 @@ Every moment with you feels just right
       </div>
     </div>
 
-    <!-- Section 6: Notepad -->
+    <!-- SECTION 6 -->
     <div id="section6" class="section hidden">
       <h2 class="center">A little note for you 📝</h2>
       <p class="small-label">From me, to you</p>
+
       <div class="notepad">
         <div class="notepad-text">
 BABYYYY, 
@@ -366,8 +373,10 @@ I realized that even though there are so many miles between us, I’ve never fel
         </div>
       </div>
     </div>
+
   </div>
 
+  <!-- FULL JAVASCRIPT -->
   <script>
     function showSection(id) {
       const sections = document.querySelectorAll(".section");
@@ -398,4 +407,52 @@ I realized that even though there are so many miles between us, I’ve never fel
       document.getElementById("img3"),
       document.getElementById("img4")
     ];
-    const continueFromBalloons = document
+    const continueFromBalloons = document.getElementById("continueFromBalloons");
+    let poppedCount = 0;
+
+    balloons.forEach(balloon => {
+      balloon.addEventListener("click", () => {
+        if (balloon.classList.contains("popped")) return;
+        const index = parseInt(balloon.getAttribute("data-id"), 10);
+        balloon.classList.add("popped");
+        poppedCount++;
+
+        if (revealImages[index]) {
+          revealImages[index].classList.add("visible");
+        }
+
+        if (poppedCount === balloons.length) {
+          continueFromBalloons.classList.remove("hidden");
+        }
+      });
+    });
+
+    continueFromBalloons.addEventListener("click", () => {
+      showSection("section3");
+    });
+
+    // Section 3: First question
+    const section3 = document.getElementById("section3");
+    section3.addEventListener("click", (e) => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      showSection("section4");
+    });
+
+    // Section 4: Error
+    const errorBox = document.getElementById("errorBox");
+    errorBox.addEventListener("click", () => {
+      showSection("section5");
+    });
+
+    // Section 5: Second question
+    const section5 = document.getElementById("section5");
+    section5.addEventListener("click", (e) => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      showSection("section6");
+    });
+  </script>
+
+</body>
+</html>
